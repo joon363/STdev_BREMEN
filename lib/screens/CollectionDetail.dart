@@ -216,7 +216,7 @@ class CollectionCard extends StatelessWidget {
                         Text(
                           item.name,
                           style: TextStyle(
-                            fontSize: 23,
+                            fontSize: 20,
                             fontFamily: 'Kakao',
                             color: (item.rarity == Rarity.rare) ? Colors.white : Colors.black,
                           ),
