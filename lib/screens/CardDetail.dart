@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../models/card_item.dart';
 import '../constants/card_styles.dart';
 
+const card_purple = Color(0xFFEEE9FF);
+
 class CardDetailPage extends StatelessWidget {
   final CardItem card;
 
@@ -10,7 +12,7 @@ class CardDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Colors.transparent, // ✅ 배경을 투명하게
+      backgroundColor: Colors.transparent,
       insetPadding: const EdgeInsets.all(16),
       child: Center(
         child: Stack(
@@ -24,7 +26,7 @@ class CardDetailPage extends StatelessWidget {
                     ? BorderSide(color: rarityColors[card.rarity]!, width: 3)
                     : BorderSide.none,
               ),
-              color: card.isUnlocked ? Colors.white : lockedCardBackgroundColor,
+              color: card_purple,
               child: Container(
                 width: 300,
                 padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
@@ -32,7 +34,7 @@ class CardDetailPage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     if (card.isUnlocked)
-                      Image.asset(card.imagePath, height: 120)
+                      Image.asset(card.imagePath, height: 240, fit: BoxFit.contain,)
                     else
                       Icon(Icons.lock, size: 80, color: Colors.grey),
                     const SizedBox(height: 20),
@@ -41,22 +43,34 @@ class CardDetailPage extends StatelessWidget {
                       style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 0),
                     Text(
                       card.isUnlocked
-                          ? "희귀도: ${card.rarity.name.toUpperCase()}"
+                          ? "${card.rarity.name.toUpperCase()}"
                           : "수집되지 않은 카드입니다",
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 35,
                         color: card.isUnlocked ? rarityColors[card.rarity] : Colors.grey,
+                        fontFamily: 'Micro5',
+                        shadows: [
+                          Shadow(
+                            offset: Offset(0, 2),
+                            blurRadius: 4,
+                            color: Colors.black26,
+                          ),
+                        ],
                       ),
+                      textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 0),
                     if (card.isUnlocked)
-                      Text(
-                        card.description,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 13, color: Colors.black87),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20), // 좌우 여백 추가
+                        child: Text(
+                          card.description,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 18, color: Colors.black87, fontFamily: 'Kakao'),
+                        ),
                       ),
                   ],
                 ),
@@ -65,10 +79,10 @@ class CardDetailPage extends StatelessWidget {
 
             // 닫기 버튼
             Positioned(
-              top: 0,
-              right: 0,
+              top: 8,
+              right: 8,
               child: IconButton(
-                icon: const Icon(Icons.close, size: 26),
+                icon: const Icon(Icons.close, size: 40),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ),

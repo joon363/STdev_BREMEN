@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => const RankingPage(),
+        '/': (context) => const CollectionHomePage(),
         '/collectionDetail': (context) {
           final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
           return CollectionDetailPage(collectionKey: args['collectionKey']);
