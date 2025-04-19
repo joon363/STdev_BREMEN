@@ -66,6 +66,15 @@ flutter:
     - lib/assets/icons/
     - lib/assets/fonts/
 
+  fonts:
+    - family: Kakao
+      fonts:
+        - asset: lib/assets/fonts/KakaoBold.ttf
+        - asset: lib/assets/fonts/KakaoRegular.ttf
+    - family: Micro5
+      fonts:
+        - asset: lib/assets/fonts/Micro5-Regular.ttf
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
@@ -82,11 +91,6 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-    - family: Kakao
-      fonts:
-        - asset: lib/assets/fonts/KakaoBold.ttf
-        - asset: lib/assets/fonts/KakaoRegular.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:
