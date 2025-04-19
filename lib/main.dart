@@ -9,7 +9,8 @@ import 'package:stdev_bremen/pages/onboarding_page.dart';
 import 'package:stdev_bremen/pages/chatbot_page.dart';
 import 'screens/CollectionDetail.dart';
 import 'screens/CardDetail.dart';
-import 'screens/CreateCollectionPage.dart'; // ✅ 새로 추가된 페이지 import
+import 'screens/CreateCollectionPage.dart';
+import 'screens/RankingPage.dart';
 import 'dart:async';
 import 'dart:io';
 
@@ -48,11 +49,12 @@ class MyApp extends StatelessWidget {
           final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
           return CardDetailPage(card: args['card']);
         },
-        '/createCollection': (context) => const CreateCollectionPage(),
         '/collectionDetail': (context) {
           final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
           return CollectionDetailPage(collectionKey: args['collectionKey']);
         },
+        '/createCollection': (context) => const CreateCollectionPage(),
+        '/ranking': (context) => const RankingPage(),
       },
     );
   }
