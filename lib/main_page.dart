@@ -4,6 +4,7 @@ import 'pages/ranking_page.dart';
 import 'pages/camera_page.dart';
 import 'themes.dart';
 
+
 class MainPage extends StatefulWidget {
   @override
   State<MainPage> createState() => _MainPageState();
@@ -77,7 +78,7 @@ class BottomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.deepPurple,
+      color: secondaryColor,
       shape: const CircleBorder(),
       elevation: 5,
       child: InkWell(
@@ -165,6 +166,7 @@ class DailyMissionCard extends StatelessWidget {
       margin: EdgeInsets.zero,
       color: Colors.white,
       elevation: 5,
+      shadowColor: Colors.black38,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(padding: EdgeInsets.all(10),
         child: Column(
@@ -254,7 +256,15 @@ class RankingCard extends StatelessWidget {
             elevation: 5, // 그림자 효과 추가 // 그림자 색상 설정
             child: Stack(
               children: [
+
                 // 배경 이미지
+                Container(
+                  height: 180,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: primaryColorLight,
+                  ),
+                ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16),
                   child: Image.asset(
@@ -386,7 +396,6 @@ class CollectionCard extends StatelessWidget {
     );
   }
 }
-
 
 class MissionProgressCard extends StatelessWidget {
   final String title;

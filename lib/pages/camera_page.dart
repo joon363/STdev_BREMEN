@@ -5,16 +5,17 @@ import 'package:stdev_bremen/pages/scanner_components/scanner_button_widgets.dar
 import 'package:stdev_bremen/pages/scanner_components/scanner_error_widget.dart';
 import 'package:stdev_bremen/themes.dart';
 export 'package:provider/provider.dart';
+import 'package:flutter/cupertino.dart';
 
-class CameraPage extends StatefulWidget {
-  const CameraPage({super.key});
+class CameraTestPage extends StatefulWidget {
+  const CameraTestPage({super.key});
 
   @override
-  State<CameraPage> createState() =>
-  _CameraPageState();
+  State<CameraTestPage> createState() =>
+  _CameraTestPageState();
 }
 
-class _CameraPageState extends State<CameraPage> {
+class _CameraTestPageState extends State<CameraTestPage> {
   final MobileScannerController controller = MobileScannerController(
     formats: const[BarcodeFormat.qrCode],
   );
