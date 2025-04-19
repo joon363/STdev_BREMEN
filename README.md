@@ -1,4 +1,5 @@
 # main_api API
+**응답 형식을 보고자 하면 test_client를 참고하는게 빠를 수도 있음!**
 환경 변수 설정:
 - `.env` 파일 생성 후 OPENAI_API_KEY= 추가
 ## API 명세
