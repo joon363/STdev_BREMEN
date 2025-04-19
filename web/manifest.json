@@ -1,6 +1,6 @@
 {
-    "name": "stdev_bremen",
-    "short_name": "stdev_bremen",
+    "name": "bremen",
+    "short_name": "bremen",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
