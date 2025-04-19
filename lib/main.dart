@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stdev_bremen/pages/camera_page.dart';
 import 'package:stdev_bremen/pages/camera_simple_page.dart';
 import 'package:stdev_bremen/screens/CollectionHome.dart';
 import 'main_page.dart';
@@ -39,7 +38,6 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => LoadingScreen(),
         '/main': (context) => MainPage(),
-        '/cameraTest': (context) => CameraTestPage(),
         '/camera': (context) => CameraPage(camera: camera),
         '/chatbot': (context) => ChatBotPage(),
         '/ranking': (context) => RankingPage(),

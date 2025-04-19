@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'screens/CollectionHome.dart';
-import 'pages/camera_page.dart';
 import 'themes.dart';
 
 
