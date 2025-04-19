@@ -1,8 +1,11 @@
+from flask import Flask, request, jsonify
 import requests
 import base64
 import os
 import json
 import re
+
+app = Flask(__name__)
 
 def clean_json_string(json_str):
     # 실제 JSON 문자열을 찾습니다
@@ -51,67 +54,44 @@ def add_card_message(result, mission_cards):
     
     return result
 
-def test_api():
+@app.route('/process_image', methods=['POST'])
+def process_image():
     try:
-        # 현재 디렉토리 출력
-        print("현재 디렉토리:", os.getcwd())
+        data = request.get_json()
         
-        # 이미지 파일 존재 확인
-        if not os.path.exists("test_image.jpeg"):
-            print("에러: test_image.jpeg 파일을 찾을 수 없습니다!")
-            return
+        # 필수 파라미터 확인
+        required_params = ['image', 'mission', 'mission_card']
+        if not all(param in data for param in required_params):
+            return jsonify({'error': '필수 파라미터가 누락되었습니다.'}), 400
+            
+        # query 파라미터가 없으면 빈 문자열로 설정
+        if 'query' not in data:
+            data['query'] = ""
 
-        # 이미지를 base64로 인코딩
-        with open("test_image.jpeg", "rb") as image_file:
-            encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
-
-        # API 요청 데이터
-        data = {
-            "image": encoded_image,
-            "mission": [
-                "중력에 의한 물체의 낙하 현상이 나타나는가?",
-                "관성의 법칙이 나타나는가?",
-                "빛의 분광 현상이 나타나는가?"
-            ],
-            "mission_card": [
-                "중력 카드",
-                "관성 카드",
-                "분광 카드"
-            ],
-            "query": "이 사진에서 분광이 나타나는 이유는 뭐야?"
-        }
+        # AI 서버로 요청 전송
+        ai_response = requests.post("http://127.0.0.1:5000/analyze", json=data)
         
-        # API 호출
-        response = requests.post("http://127.0.0.1:5000/analyze", json=data)
-        
-        # 응답 상태 코드 출력
-        print("응답 상태 코드:", response.status_code)
-        
-        if response.status_code == 200:
+        if ai_response.status_code == 200:
             # JSON 문자열 정리
-            result = response.json()
+            result = ai_response.json()
             cleaned_json_str = clean_json_string(result['result'])
             
             try:
                 final_result = json.loads(cleaned_json_str)
                 
-                # 카드 획득 메시지 추가 (mission_card 정보 전달)
+                # 카드 획득 메시지 추가
                 final_result = add_card_message(final_result, data['mission_card'])
                 
-                print("분석 결과:", json.dumps(final_result, indent=2, ensure_ascii=False))
-                
-                with open('analysis_result.json', 'w', encoding='utf-8') as f:
-                    json.dump(final_result, f, indent=2, ensure_ascii=False)
-                print("결과가 analysis_result.json 파일에 저장되었습니다.")
+                return jsonify(final_result)
                 
             except json.JSONDecodeError as e:
-                print("JSON 파싱 에러:", e)
-                print("문제의 JSON 문자열:", cleaned_json_str)
+                return jsonify({'error': f'JSON 파싱 에러: {str(e)}'}), 500
+            
         else:
-            print("에러 응답:", response.text)
+            return jsonify({'error': 'AI 서버 응답 에러', 'details': ai_response.text}), ai_response.status_code
             
     except Exception as e:
-        print("예외 발생:", str(e))
+        return jsonify({'error': str(e)}), 500
 
-if __name__ == "__main__":
-    test_api()
+if __name__ == '__main__':
+    app.run(port=5001)  # AI 서버와 다른 포트 사용

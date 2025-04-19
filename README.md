@@ -1,11 +1,12 @@
-# ai_router API
+# main_api API
 환경 변수 설정:
 - `.env` 파일 생성 후 OPENAI_API_KEY= 추가
 ## API 명세
 
-### 엔드포인트
-- URL: `http://127.0.0.1:5000/analyze`
+### 엔드 포인트
+- URL: `http://127.0.0.1:5001/process_image`
 - Method: `POST`
+
 
 ### 요청 형식
 #### Request Body
@@ -53,3 +54,8 @@
       - success가 true일 경우: [과학 원리와 설명]
       - success가 false일 경우: ["원리 설명", "분석결과 설명", "예시1", "예시2", "예시3", "~ 카드를 발견하였습니다!", "카드이름"]
 - `query_result`: query에 대한 응답 string array(query가 없을 경우 빈 array)
+
+#ai_router api
+## AI엔드포인트(내부에서 처리)
+- URL: `http://127.0.0.1:5000/analyze`
+- Method: `POST`
