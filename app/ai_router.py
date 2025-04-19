@@ -37,7 +37,9 @@ def analyze_image():
         
         if not all(key in data for key in ['image', 'mission']):
             return jsonify({'error': '필수 파라미터가 누락되었습니다.'}), 400
-
+        if not all(key in data for key in ['query']):
+            data['query'] = ""
+        
         prompt_text = """미션은 과학원리나 현상을 요구하는 부분입니다.
                         첨부된 이미지가 미션에 부합하는 과학원리나 현상인지 판단해주세요.
                         응답형식은 다음의 json 형식으로만 답합니다.
