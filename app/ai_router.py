@@ -44,7 +44,7 @@ def analyze_image():
                         첨부된 이미지가 미션에 부합하는 과학원리나 현상인지 판단해주세요.
                         응답형식은 다음의 json 형식으로만 답합니다.
 
-                        json response: {{judgement: {{'0': {{'success': true/false, 'description': 'array'}}, '1': {{'success': true/false, 'description': 'string'}}, ...}}, query_result: 'string'}}
+                        json response: {{judgement: {{'0': {{'success': true/false, 'description': 'array'}}, '1': {{'success': true/false, 'description': 'string'}}, ...}}, query_result: 'array'}}
 
                         json response 구분:
                         -judgement와 query_result로 나뉩니다.
@@ -62,15 +62,18 @@ def analyze_image():
                         - success: 이미지가 해당 미션의 과학원리나 현상을 명확하게 보여주는지를 엄격하게 판단합니다.
                         포괄적이거나 간접적인 연관성이 아닌, 가장 대표적이고 직접적인 과학현상이 나타나야 true입니다.
                         - description:
-                        * success가 true일 경우: 이미지에서 과학원리가 나타나는 부분과 해당 과학원리에 대한 설명을 주요 원리와 이유, 예시에 대해서 각각 나눠서 emoge등을 사용하여 친근하게 설명해주세요
-                        * success가 false일 경우: 해당 과학원리가 나타나지 않는 이유와 해당 과학원리에 대한 설명을 주요 원리와 이유, 예시에 대해서 각각 나눠서 emoge등을 사용하여 친근하게 설명해주세요
+                        * success가 true일 경우: 이미지에서 과학원리가 나타나는 부분과 해당 과학원리에 대한 설명을 주요 원리와 이유, 예시에 대해서 각각 나눠서 emoji등을 사용하여 친근하게 설명해주세요
+                        * success가 false일 경우: 해당 과학원리가 나타나지 않는 이유와 해당 과학원리에 대한 설명을 주요 원리와 이유, 예시에 대해서 각각 나눠서 emoji등을 사용하여 친근하게 설명해주세요
 
                         응답 형식 설명(query_result):
-                        - query가 빈문자열일 경우에는 빈문자열을 반환합니다.
-                        - query_result는 문자열입니다.
-                        - query_result는 사진과 관련된 과학 기술에 대한 질문입니다.
+                        - query가 빈문자열일 경우에는 []을 반환합니다.
+                        - query_result는 string element로 이뤄진 array입니다.
+                        - query_result는 사진과 관련된 과학 기술에 대한 query에 대한 해답입니다.
                         - judgement와는 별개로 query_result는 사진과 관련된 과학 기술에 대한 질문인 query에 대해서 답변을 작성합니다.
-                        - 이 답변은 친근한 대화 형식으로 알려주세요.
+                        - 이 답변은 친근한 대화 형식으로 emoji를 사용하여 알려주세요.
+                        - 문단 단위로 element로 추가해주세요.
+                        - 모든 요소들을 종합하여 300자 정도 작성해주세요.
+                        
 
                         응답은 반드시 위의 json 형식으로만 작성하고, 추가 설명이나 다른 텍스트를 포함하지 마세요."""
 
