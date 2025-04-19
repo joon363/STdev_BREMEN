@@ -1,25 +1,18 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:stdev_bremen/pages/scanner_components/scanner_barcode_label.dart';
-import 'package:stdev_bremen/pages/scanner_components/scanner_button_widgets.dart';
-import 'package:stdev_bremen/pages/scanner_components/scanner_error_widget.dart';
 import 'package:stdev_bremen/screens/CollectionDetail.dart';
 import 'package:stdev_bremen/models/card_item.dart';
 import 'package:stdev_bremen/constants/card_styles.dart';
 import 'package:stdev_bremen/themes.dart';
 export 'package:provider/provider.dart';
-import 'package:flutter/cupertino.dart';
 
 // A widget that displays the picture taken by the user.
 class DisplayPictureScreen extends StatefulWidget {
   final String imagePath;
 
-  DisplayPictureScreen({super.key, required this.imagePath});
+  const DisplayPictureScreen({super.key, required this.imagePath});
 
   @override
   State<DisplayPictureScreen> createState() => _DisplayPictureScreenState();
@@ -141,7 +134,7 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                                 ? MainAxisAlignment.center // 하나일 때 가운데 정렬
                                 : MainAxisAlignment.start,  // 여러 개면 왼쪽 정렬
                               children: items.map((item) {
-                                  return Container(
+                                  return SizedBox(
                                     width: 150,
                                     height: 120,
                                     child: CollectionCard(item: item),

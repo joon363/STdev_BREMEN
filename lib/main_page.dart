@@ -3,12 +3,14 @@ import 'themes.dart';
 
 
 class MainPage extends StatefulWidget {
+  const MainPage({super.key});
+
   @override
   State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-  List<bool> _missions = [true, false, false];
+  final List<bool> _missions = [true, false, false];
 
   @override
   Widget build(BuildContext context) {
@@ -400,11 +402,11 @@ class MissionProgressCard extends StatelessWidget {
   final int total;
 
   const MissionProgressCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.current,
     required this.total,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

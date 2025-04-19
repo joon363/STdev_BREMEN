@@ -11,14 +11,13 @@ class AppTheme {
       fontFamily: "Kakao",
       colorSchemeSeed: Colors.white,
       canvasColor: Colors.white,
-      dialogBackgroundColor: Colors.white,
       dividerColor: Colors.white,
       hintColor: Colors.white,
       hoverColor: Colors.white,
       indicatorColor: Colors.white,
       scaffoldBackgroundColor: Colors.white,
       secondaryHeaderColor: Colors.white,
-      unselectedWidgetColor: Colors.white,
+      unselectedWidgetColor: Colors.white, dialogTheme: DialogThemeData(backgroundColor: Colors.white),
     );
   }
 }

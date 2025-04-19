@@ -1,14 +1,7 @@
 import 'dart:async';
-import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:stdev_bremen/pages/scanner_components/scanner_barcode_label.dart';
-import 'package:stdev_bremen/pages/scanner_components/scanner_button_widgets.dart';
-import 'package:stdev_bremen/pages/camera_result_page.dart';
-import 'package:stdev_bremen/pages/scanner_components/scanner_error_widget.dart';
+import 'package:stdev_bremen/screens/camera_result_page.dart';
 import 'package:stdev_bremen/themes.dart';
 export 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -77,7 +70,23 @@ class CameraPageState extends State<CameraPage> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         spacing: defaultPadding * 4,
                         children: [
-                          ExitButton(),
+                          Material(
+                            elevation: 0,
+                            color: Colors.white, // 배경색
+                            borderRadius: BorderRadius.circular(999),
+                            child: InkWell(
+                              //highlightColor: primaryColor,
+                              borderRadius: BorderRadius.circular(999),
+                              onTap: () async {
+                                Navigator.pop(context);
+                              },
+                              child: CircleAvatar(
+                                  radius: 30, // 원의 반지름
+                                  backgroundColor: Colors.white, // 하얀 배경
+                                  child: Icon(CupertinoIcons.xmark, size: 25, color: Colors.black,)
+                              ),
+                            ),
+                          ),
                           Material(
                             elevation: 0,
                             color: Colors.white, // 배경색

@@ -4,7 +4,7 @@ import 'package:stdev_bremen/main_page.dart';
 import 'dart:async';
 
 class LoadingScreen extends StatefulWidget {
-  const LoadingScreen({Key? key}) : super(key: key);
+  const LoadingScreen({super.key});
 
   @override
   _LoadingScreenState createState() => _LoadingScreenState();

@@ -3,7 +3,6 @@ import '../models/card_item.dart';
 import '../constants/card_styles.dart';
 import 'CardDetail.dart';
 import 'package:stdev_bremen/data/collection_registry.dart';
-import '../data/collection_registry.dart';
 import '../models/collection_meta.dart';
 
 class CollectionDetailPage extends StatelessWidget {

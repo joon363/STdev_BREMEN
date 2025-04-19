@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:stdev_bremen/pages/camera_simple_page.dart';
+import 'package:stdev_bremen/screens/camera_simple_page.dart';
 import 'package:stdev_bremen/screens/CollectionHome.dart';
 import 'main_page.dart';
 import 'package:stdev_bremen/themes.dart';
-import 'package:stdev_bremen/pages/onboarding_page.dart';
-import 'package:stdev_bremen/pages/chatbot_page.dart';
+import 'package:stdev_bremen/screens/onboarding_page.dart';
+import 'package:stdev_bremen/screens/chatbot_page.dart';
 import 'screens/CollectionDetail.dart';
 import 'screens/CardDetail.dart';
 import 'screens/CreateCollectionPage.dart';
 import 'screens/RankingPage.dart';
-import 'dart:async';
-import 'dart:io';
 
 import 'package:camera/camera.dart';
-import 'package:flutter/material.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
