@@ -37,7 +37,7 @@
       },
       "1": {
         "success": true/false,
-        "description": ["원리 설명","분석결과 설명", "예시1", "예시2","예시3"]
+        "description": ["원리 설명", "분석결과 설명", "예시1", "예시2", "예시3", "~ 카드를 발견하였습니다!"]
       }
     },
     "query_result": ["query 답변 1문단", "query 답변 2문단", ...]
@@ -50,6 +50,6 @@
   - `mission_index`: 미션 배열의 인덱스 (문자열)
     - `success`: 해당 미션의 과학 원리/현상 부합 여부 (boolean)
     - `description`: 분석 설명 (string array, 400자 이내)
-      - success가 true일 경우: 이미지에서 나타나는 과학 원리와 설명
-      - success가 false일 경우: 해당 현상이 나타나지 않는 이유와 과학 원리 설명
+      - success가 true일 경우: [과학 원리와 설명]
+      - success가 false일 경우: ["원리 설명", "분석결과 설명", "예시1", "예시2", "예시3", "~ 카드를 발견하였습니다!"]
 - `query_result`: query에 대한 응답 string array(query가 없을 경우 빈 array)
