@@ -5,7 +5,7 @@ final Map<String, List<CardItem>> chemistryGrade1 = {
   "물질의 상태": [
     CardItem(
       name: "고체, 액체, 기체",
-      imagePath: "assets/images/states_of_matter.png",
+      imagePath: "lib/assets/icons/states_of_matter.png",
       isUnlocked: true,
       rarity: Rarity.common,
       description: "물질은 고체, 액체, 기체의 세 가지 상태로 존재하며 상태에 따라 모양과 부피가 달라집니다.",
@@ -21,7 +21,7 @@ final Map<String, List<CardItem>> chemistryGrade1 = {
   "물질의 성질": [
     CardItem(
       name: "밀도",
-      imagePath: "assets/images/density.png",
+      imagePath: "lib/assets/icons/density.png",
       isUnlocked: true,
       rarity: Rarity.rare,
       description: "밀도는 단위 부피당 질량을 나타내며, 같은 부피라도 질량이 다를 수 있습니다.",
@@ -37,7 +37,7 @@ final Map<String, List<CardItem>> chemistryGrade1 = {
   "혼합물과 분리": [
     CardItem(
       name: "여과 실험",
-      imagePath: "assets/images/filtration.png",
+      imagePath: "lib/assets/icons/filtration.png",
       isUnlocked: true,
       rarity: Rarity.common,
       description: "혼합물을 여과 장치를 통해 분리할 수 있습니다. 예: 물과 모래.",
