@@ -5,7 +5,7 @@ class CollectionHomePage extends StatelessWidget {
 
   final List<Collection> collections = const [
     Collection(id: "초3_물리", title: "초등 3학년 물리", subscribers: 1200, progress: 0.45),
-    Collection(id: "초3_화학", title: "중등 화학 기본", subscribers: 800, progress: 0.7),
+    Collection(id: "중등_화학", title: "중등 화학 기본", subscribers: 800, progress: 0.7),
     Collection(id: "탐구", title: "과학 탐구생활", subscribers: 300, progress: 0.1),
   ];
 
@@ -35,7 +35,7 @@ class CollectionHomePage extends StatelessWidget {
                       Navigator.pushNamed(
                         context,
                         '/collectionDetail',
-                        arguments: {'collectionKey': collection.id}, // ✅ FIXED
+                        arguments: {'collectionKey': collection.id},
                       );
                     },
                     child: Card(
@@ -70,7 +70,7 @@ class CollectionHomePage extends StatelessWidget {
 }
 
 class Collection {
-  final String id; // 🔑 collectionKey 역할
+  final String id; // 🔑 !!!collectionKey 역할!!!
   final String title;
   final int subscribers;
   final double progress;
