@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:bremen/pages/scanner_components/scanner_barcode_label.dart';
-import 'package:bremen/pages/scanner_components/scanner_button_widgets.dart';
-import 'package:bremen/pages/scanner_components/scanner_error_widget.dart';
-import 'package:bremen/themes.dart';
+import 'package:stdev_bremen/pages/scanner_components/scanner_barcode_label.dart';
+import 'package:stdev_bremen/pages/scanner_components/scanner_button_widgets.dart';
+import 'package:stdev_bremen/pages/scanner_components/scanner_error_widget.dart';
+import 'package:stdev_bremen/themes.dart';
 export 'package:provider/provider.dart';
 
 class CameraPage extends StatefulWidget {

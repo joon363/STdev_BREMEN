@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pages/collection_page.dart';
+import 'screens/CollectionHome.dart';
 import 'pages/ranking_page.dart';
 import 'pages/camera_page.dart';
 
@@ -91,7 +91,7 @@ class _MainPageState extends State<MainPage> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (_) => CollectionPage()),
+                            MaterialPageRoute(builder: (_) => CollectionHomePage()),
                           );
                         },
                       ),

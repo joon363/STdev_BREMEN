@@ -1,4 +1,4 @@
-import 'package:bremen/themes.dart';
+import 'package:stdev_bremen/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 export 'package:provider/provider.dart';
