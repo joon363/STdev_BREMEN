@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stdev_bremen/pages/camera_page.dart';
 import 'package:stdev_bremen/pages/camera_simple_page.dart';
-import 'package:stdev_bremen/pages/ranking_page.dart';
 import 'package:stdev_bremen/screens/CollectionHome.dart';
 import 'main_page.dart';
 import 'package:stdev_bremen/themes.dart';
@@ -54,7 +53,6 @@ class MyApp extends StatelessWidget {
           return CollectionDetailPage(collectionKey: args['collectionKey']);
         },
         '/createCollection': (context) => const CreateCollectionPage(),
-        '/ranking': (context) => const RankingPage(),
       },
     );
   }
