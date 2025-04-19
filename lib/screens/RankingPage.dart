@@ -116,7 +116,7 @@ class _RankingPageState extends State<RankingPage> with SingleTickerProviderStat
 
   Widget _buildLeagueContent() {
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 300),
       layoutBuilder: (currentChild, previousChildren) => currentChild!,
       transitionBuilder: (child, animation) {
         final offsetAnimation = Tween<Offset>(
@@ -328,7 +328,12 @@ class _RankingPageState extends State<RankingPage> with SingleTickerProviderStat
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.arrow_back_ios_new, color: purple, size: 30),
+                        IconButton(
+                          icon: const Icon(Icons.arrow_back_ios_new, color: purple, size: 30),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
                         const SizedBox(width: 8),
                         const Baseline(
                           baseline: 40,

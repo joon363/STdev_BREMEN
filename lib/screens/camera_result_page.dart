@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:stdev_bremen/screens/CollectionDetail.dart';
 import 'package:stdev_bremen/models/card_item.dart';
 import 'package:stdev_bremen/constants/card_styles.dart';
+import 'package:stdev_bremen/connections/api_call.dart';
 import 'package:stdev_bremen/themes.dart';
 export 'package:provider/provider.dart';
 
 // A widget that displays the picture taken by the user.
 class DisplayPictureScreen extends StatefulWidget {
   final String imagePath;
-
   const DisplayPictureScreen({super.key, required this.imagePath});
 
   @override
@@ -19,11 +19,50 @@ class DisplayPictureScreen extends StatefulWidget {
 }
 
 class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
+  final List<CardItem> _originalItems = [
+    CardItem(
+      name: "자석의 극",
+      imagePath: "assets/images/magnet_pole.png",
+      isUnlocked: true,
+      rarity: Rarity.common,
+      description:
+      "자석에는 N극과 S극이 있으며, 같은 극끼리는 밀어내고 다른 극끼리는 끌어당기는 성질이 있습니다.",
+    ),
+    CardItem(
+      name: "자석의 작용 범위",
+      imagePath: "assets/images/magnet_range.png",
+      isUnlocked: true,
+      rarity: Rarity.rare,
+      description:
+      "자석은 닿지 않아도 가까운 곳에 있는 철 물체를 끌어당길 수 있습니다. 이 범위를 자력이라고 합니다.",
+    ),
+    CardItem(
+      name: "프리즘 분광",
+      imagePath: "assets/images/magnet_range.png",
+      isUnlocked: true,
+      rarity: Rarity.rare,
+      description:
+      "빛은 삼각형 모양의 프리즘을 통과하면 스펙트럼별로 분광됩니다. 이 현상을 프리즘 분광이라고 합니다.",
+    ),
+  ];
+  final List<String> _originalMissions = [
+    "자석에는 N극과 S극이 있으며, 같은 극끼리는 밀어내고 다른 극끼리는 끌어당기는 성질이 있습니다.",
+    "자석은 닿지 않아도 가까운 곳에 있는 철 물체를 끌어당길 수 있습니다. 이 범위를 자력이라고 합니다.",
+    "빛은 삼각형 모양의 프리즘을 통과하면 스펙트럼별로 분광됩니다. 이 현상을 프리즘 분광이라고 합니다.",
+  ];
+  final List<String> _originalMissionCards = ["자석의 극", "자석의 작용 범위", "프리즘 분광"];
   late Future<List<CardItem>> _futureItems;
   @override
   void initState() {
     super.initState();
-    _futureItems = fetchNoCardItems(); // 서버에서 받아오는 함수
+    _futureItems = fetchCardItemsFromApi(
+      imagePath: widget.imagePath,
+      missions: _originalMissions,
+      missionCards: _originalMissionCards,
+    ).then((flags) => [
+      for (int i = 0; i < flags.length; i++)
+        if (flags[i]) _originalItems[i]
+    ]);
   }
   Future<List<CardItem>> fetchNoCardItems() async {
     await Future.delayed(const Duration(seconds: 1)); // 3초 대기 (서버 응답 시뮬레이션)
@@ -49,7 +88,7 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
         "자석은 닿지 않아도 가까운 곳에 있는 철 물체를 끌어당길 수 있습니다. 이 범위를 자력이라고 합니다.",
       ),
       CardItem(
-        name: "자석의 작용 범위",
+        name: "분광",
         imagePath: "assets/images/magnet_range.png",
         isUnlocked: true,
         rarity: Rarity.rare,

@@ -20,7 +20,6 @@ class _MainPageState extends State<MainPage> {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
-            spacing: 20,
             children: [
               // Title
               Align(
@@ -34,20 +33,23 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ),
               ),
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: primaryColorLight,
-                ),
-                child: Text(
-                  "실시간으로 친구들이 발견하고 있는 법칙들 엿보기 😶",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
-                ),
-              ),
+              SizedBox(height: 5,),
+              // Container(
+              //   alignment: Alignment.centerLeft,
+              //   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(10),
+              //     color: primaryColorLight,
+              //   ),
+              //   child: Text(
+              //     "실시간으로 친구들이 발견하고 있는 법칙들 엿보기 😶",
+              //     style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
+              //   ),
+              // ),
+              SizedBox(height: 20,),
               // 일일
               DailyMissionCard(),
+              SizedBox(height: 40,),
               // 컬렉션, 랭킹
               Row(
                 spacing: 20,
@@ -213,7 +215,7 @@ class DailyMissionCard extends StatelessWidget {
             SizedBox(height: 10,),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 10,
+              spacing: 15,
               children: const[
                 MissionProgressCard(
                   title: '‘밀면 밀려요’ 챌린지! 작용·반작용 찾아 찍기 👟',
@@ -422,7 +424,7 @@ class MissionProgressCard extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 4),
         Row(
           children: [
             // 진행 바
