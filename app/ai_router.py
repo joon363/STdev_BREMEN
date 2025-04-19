@@ -42,20 +42,30 @@ def analyze_image():
                         첨부된 이미지가 미션에 부합하는 과학원리나 현상인지 판단해주세요.
                         응답형식은 다음의 json 형식으로만 답합니다.
 
-                        json response: {{'0': {'success': true/false, 'description': 'string'}, '1': {'success': true/false, 'description': 'string'}, ...}}
+                        json response: {{judgement: {{'0': {{'success': true/false, 'description': 'string'}}, '1': {{'success': true/false, 'description': 'string'}}, ...}}, query_result: 'string'}}
 
-                        응답 형식 설명:
+                        json response 구분:
+                        -judgement와 query_result로 나뉩니다.
+                        -judgement와 query_result는 아래의 설명에 따라 응답이 이뤄집니다.
+
+                        응답 형식 설명(judgement):
                         - 키는 미션의 인덱스(0부터 시작하는 문자열)입니다.
                         - 각 미션별로 success와 description을 포함하는 객체를 반환합니다.
                         - success는 boolean 값(true/false)입니다.
                         - description은 문자열입니다.
 
-                        판단 기준:
+                        판단 기준(judgement):
                         - success: 이미지가 해당 미션의 과학원리나 현상을 명확하게 보여주는지를 엄격하게 판단합니다.
                         포괄적이거나 간접적인 연관성이 아닌, 가장 대표적이고 직접적인 과학현상이 나타나야 true입니다.
                         - description:
                         * success가 true일 경우: 이미지에서 과학원리가 나타나는 부분과 해당 과학원리에 대한 설명을 400자 이내로 작성
                         * success가 false일 경우: 해당 과학원리가 나타나지 않는 이유와 해당 과학원리에 대한 설명을 400자 이내로 작성
+
+                        응답 형식 설명(query_result):
+                        - query가 빈문자열일 경우에는 빈문자열을 반환합니다.
+                        - query_result는 문자열입니다.
+                        - query_result는 사진과 관련된 과학 기술에 대한 질문입니다.
+                        - judgement와는 별개로 query_result는 사진과 관련된 과학 기술에 대한 질문인 query에 대해서 답변을 작성합니다.
 
                         응답은 반드시 위의 json 형식으로만 작성하고, 추가 설명이나 다른 텍스트를 포함하지 마세요."""
 
@@ -67,7 +77,7 @@ def analyze_image():
                     "content": [
                         {
                             "type": "text",
-                            "text": f"미션: {data['mission']}\n프롬프트: {prompt_text}"
+                            "text": f"미션: {data['mission']}\n query: {data['query']} \n프롬프트: {prompt_text}"
                         },
                         {
                             "type": "image_url",
