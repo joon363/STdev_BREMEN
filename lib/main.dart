@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'screens/CollectionHome.dart';
 import 'screens/CollectionDetail.dart';
 import 'screens/CardDetail.dart';
-import 'screens/CreateCollectionPage.dart'; // ✅ 새로 추가된 페이지 import
+import 'screens/CreateCollectionPage.dart';
+import 'screens/RankingPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => const CollectionHomePage(),
+        '/': (context) => const RankingPage(),
         '/collectionDetail': (context) {
           final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
           return CollectionDetailPage(collectionKey: args['collectionKey']);
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
           return CardDetailPage(card: args['card']);
         },
         '/createCollection': (context) => const CreateCollectionPage(),
+        '/ranking': (context) => const RankingPage(),
       },
     );
   }
