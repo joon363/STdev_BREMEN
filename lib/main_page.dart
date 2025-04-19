@@ -21,7 +21,7 @@ class _MainPageState extends State<MainPage> {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
-            spacing: 10,
+            spacing: 20,
             children: [
               // Title
               Align(
@@ -51,7 +51,7 @@ class _MainPageState extends State<MainPage> {
               DailyMissionCard(),
               // 컬렉션, 랭킹
               Row(
-                spacing: 10,
+                spacing: 20,
                 children: [
                   CollectionCard(),
                   RankingCard(),

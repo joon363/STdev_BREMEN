@@ -56,7 +56,7 @@ class CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<void>(
+      body: SafeArea(child: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
@@ -65,65 +65,76 @@ class CameraPageState extends State<CameraPage> {
               alignment: Alignment.center,
               children: [
                 Expanded(child: Container(
-                    color: Colors.black,
-                  )),
+                  color: Colors.black,
+                )),
                 CameraPreview(_controller),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  spacing: defaultPadding,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      spacing: defaultPadding * 4,
-                      children: [
-                        ExitButton(),
-                        Material(
-                          elevation: 0,
-                          color: Colors.white, // 배경색
-                          borderRadius: BorderRadius.circular(999),
-                          child: InkWell(
-                            //highlightColor: primaryColor,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    spacing: defaultPadding,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        spacing: defaultPadding * 4,
+                        children: [
+                          ExitButton(),
+                          Material(
+                            elevation: 0,
+                            color: Colors.white, // 배경색
                             borderRadius: BorderRadius.circular(999),
-                            onTap: () async {
-                              // Take the Picture in a try / catch block. If anything goes wrong,
-                              // catch the error.
-                              try {
-                                // Ensure that the camera is initialized.
-                                await _initializeControllerFuture;
+                            child: InkWell(
+                              //highlightColor: primaryColor,
+                              borderRadius: BorderRadius.circular(999),
+                              onTap: () async {
+                                // Take the Picture in a try / catch block. If anything goes wrong,
+                                // catch the error.
+                                try {
+                                  // Ensure that the camera is initialized.
+                                  await _initializeControllerFuture;
 
-                                // Attempt to take a picture and get the file `image`
-                                // where it was saved.
-                                final image = await _controller.takePicture();
+                                  // Attempt to take a picture and get the file `image`
+                                  // where it was saved.
+                                  final image = await _controller.takePicture();
 
-                                if (!context.mounted) return;
+                                  if (!context.mounted) return;
 
-                                // If the picture was taken, display it on a new screen.
-                                await Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => DisplayPictureScreen(
-                                      // Pass the automatically generated path to
-                                      // the DisplayPictureScreen widget.
-                                      imagePath: image.path,
+                                  // If the picture was taken, display it on a new screen.
+                                  await Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => DisplayPictureScreen(
+                                        // Pass the automatically generated path to
+                                        // the DisplayPictureScreen widget.
+                                        imagePath: image.path,
+                                      ),
                                     ),
-                                  ),
-                                );
-                              } catch (e) {
-                                // If an error occurs, log the error to the console.
-                                print(e);
-                              }
-                            },
-                            child: CircleAvatar(
-                              radius: 30, // 원의 반지름
-                              backgroundColor: Colors.white, // 하얀 배경
-                              child: Icon(Icons.camera_alt, size: 25, color: Colors.black,)
+                                  );
+                                } catch (e) {
+                                  // If an error occurs, log the error to the console.
+                                  print(e);
+                                }
+                              },
+                              child: CircleAvatar(
+                                  radius: 30, // 원의 반지름
+                                  backgroundColor: Colors.white, // 하얀 배경
+                                  child: Icon(Icons.camera_alt, size: 25, color: Colors.black,)
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: defaultPadding * 2,)
-                  ]
+                        ],
+                      ),
+                      SizedBox(height: defaultPadding * 2,)
+                    ]
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    margin: EdgeInsets.only(left: 10, top: 50),
+                    color: Colors.black26,
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    child: Text('미션 목록\n- ‘밀면 밀려요’ 챌린지! 작용·반작용 찾아 찍기(1/2)\n- ‘미끄러울수록 덜 멈춰요!’ 마찰력 현장포착(2/2)\n- 얼음이 녹는 순간, 상태 변화 따라잡기!(1/3)',
+                      style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.normal),
+                    ),)
+                  ,
                 )
               ],
             );
@@ -132,7 +143,7 @@ class CameraPageState extends State<CameraPage> {
             return const Center(child: CircularProgressIndicator());
           }
         },
-      ),
+      ),)
     );
   }
 }

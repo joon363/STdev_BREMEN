@@ -6,6 +6,7 @@ import 'package:stdev_bremen/screens/CollectionHome.dart';
 import 'main_page.dart';
 import 'package:stdev_bremen/themes.dart';
 import 'package:stdev_bremen/pages/onboarding_page.dart';
+import 'package:stdev_bremen/pages/chatbot_page.dart';
 import 'screens/CollectionDetail.dart';
 import 'screens/CardDetail.dart';
 import 'screens/CreateCollectionPage.dart'; // ✅ 새로 추가된 페이지 import
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         '/main': (context) => MainPage(),
         '/cameraTest': (context) => CameraTestPage(),
         '/camera': (context) => CameraPage(camera: camera),
+        '/chatbot': (context) => ChatBotPage(),
         '/ranking': (context) => RankingPage(),
         '/collectionHome': (context) => CollectionHomePage(),
         '/cardDetail': (context) {
