@@ -7,6 +7,7 @@ import 'package:stdev_bremen/themes.dart';
 import 'package:stdev_bremen/pages/onboarding_page.dart';
 import 'screens/CollectionDetail.dart';
 import 'screens/CardDetail.dart';
+import 'screens/CreateCollectionPage.dart'; // ✅ 새로 추가된 페이지 import
 
 void main() {
   runApp(MyApp());
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
           final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
           return CardDetailPage(card: args['card']);
         },
+        '/createCollection': (context) => const CreateCollectionPage(),
       },
     );
   }

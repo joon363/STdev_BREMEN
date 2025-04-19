@@ -1,13 +1,39 @@
 import 'package:flutter/material.dart';
+import '../models/card_item.dart';
+import 'CollectionDetail.dart';
 
-class CollectionHomePage extends StatelessWidget {
+class CollectionHomePage extends StatefulWidget {
   const CollectionHomePage({super.key});
 
-  final List<Collection> collections = const [
-    Collection(id: "초3_물리", title: "초등 3학년 물리", subscribers: 1200, progress: 0.45),
-    Collection(id: "초3_화학", title: "중등 화학 기본", subscribers: 800, progress: 0.7),
-    Collection(id: "탐구", title: "과학 탐구생활", subscribers: 300, progress: 0.1),
+  @override
+  State<CollectionHomePage> createState() => _CollectionHomePageState();
+}
+
+class _CollectionHomePageState extends State<CollectionHomePage> {
+  final List<Collection> collections = [
+    const Collection(id: "초3_물리", title: "초등 3학년 물리", subscribers: 1200, progress: 0.45),
+    const Collection(id: "중등_화학", title: "중등 화학 기본", subscribers: 800, progress: 0.7),
+    const Collection(id: "탐구", title: "과학 탐구생활", subscribers: 300, progress: 0.1),
   ];
+
+  final Map<String, Map<String, List<CardItem>>> customCollectionData = {};
+
+  Future<void> _goToCreatePage() async {
+    final result = await Navigator.pushNamed(context, '/createCollection');
+    if (result is Map<String, dynamic>) {
+      setState(() {
+        collections.add(Collection(
+          id: result['id'],
+          title: result['title'],
+          subscribers: result['subscribers'],
+          progress: result['progress'],
+        ));
+        customCollectionData[result['id']] = (result['data'] as Map<String, dynamic>).map(
+              (key, value) => MapEntry(key, (value as List).cast<CardItem>()),
+        );
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +50,20 @@ class CollectionHomePage extends StatelessWidget {
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
               ),
             ),
+            const SizedBox(height: 12),
+            Align(
+              alignment: Alignment.centerRight,
+              child: ElevatedButton.icon(
+                onPressed: _goToCreatePage,
+                icon: const Icon(Icons.add),
+                label: const Text("새 컬렉션 만들기"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blueAccent,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                ),
+              ),
+            ),
             const SizedBox(height: 16),
             Expanded(
               child: ListView.builder(
@@ -32,9 +72,23 @@ class CollectionHomePage extends StatelessWidget {
                   final collection = collections[index];
                   return GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context,'/collectionDetail',
-                        arguments: {'collectionKey': collection.id}, // ✅ FIXED
-                      );
+                      if (customCollectionData.containsKey(collection.id)) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CollectionDetailPage(
+                              title: collection.title,
+                              data: customCollectionData[collection.id],
+                            ),
+                          ),
+                        );
+                      } else {
+                        Navigator.pushNamed(
+                          context,
+                          '/collectionDetail',
+                          arguments: {'collectionKey': collection.id},
+                        );
+                      }
                     },
                     child: Card(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -68,7 +122,7 @@ class CollectionHomePage extends StatelessWidget {
 }
 
 class Collection {
-  final String id; // 🔑 collectionKey 역할
+  final String id; // 🔑 !!!collectionKey 역할!!!
   final String title;
   final int subscribers;
   final double progress;
