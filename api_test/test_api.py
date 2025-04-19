@@ -40,11 +40,13 @@ def add_card_message(result, mission_cards):
             # description이 리스트인 경우
             if isinstance(mission_result['description'], list):
                 mission_result['description'].append(card_message)
+                mission_result['description'].append(card_name)
             # description이 문자열인 경우
             else:
                 mission_result['description'] = [
                     mission_result['description'],
-                    card_message
+                    card_message,
+                    card_name
                 ]
     
     return result
