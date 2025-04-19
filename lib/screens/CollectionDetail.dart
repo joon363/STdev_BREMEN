@@ -144,8 +144,8 @@ class CollectionCard extends StatelessWidget {
         );
       },
       child: Container(
-        width: 180,
-        height: 180,
+        width: 170,
+        height: 170,
         decoration: BoxDecoration(
           color: item.isUnlocked ? card_purple : Colors.grey[300],
           borderRadius: BorderRadius.circular(16),
@@ -204,18 +204,18 @@ class CollectionCard extends StatelessWidget {
                     children: [
                       Image.asset(
                         item.isUnlocked ? item.imagePath : 'lib/assets/icons/lock_icon.png',
-                        height: 110,
+                        height: 100,
                         fit: BoxFit.contain,
                         errorBuilder: (context, error, stackTrace) {
                           return const Icon(Icons.lock_outline, size: 48, color: Colors.grey);
                         },
                       ),
-                      const SizedBox(height: 8),
+                      //const SizedBox(height: 8),
                       if (item.isUnlocked)
                         Text(
                           item.name,
                           style: TextStyle(
-                            fontSize: 23,
+                            fontSize: 20,
                             fontFamily: 'Kakao',
                             color: (item.rarity == Rarity.rare) ? Colors.white : Colors.black,
                           ),

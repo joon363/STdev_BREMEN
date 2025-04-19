@@ -37,12 +37,11 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
       "자석은 닿지 않아도 가까운 곳에 있는 철 물체를 끌어당길 수 있습니다. 이 범위를 자력이라고 합니다.",
     ),
     CardItem(
-      name: "프리즘 분광",
-      imagePath: "assets/images/magnet_range.png",
-      isUnlocked: true,
-      rarity: Rarity.rare,
-      description:
-      "빛은 삼각형 모양의 프리즘을 통과하면 스펙트럼별로 분광됩니다. 이 현상을 프리즘 분광이라고 합니다.",
+        name: "분광",
+        imagePath: "lib/assets/icons/prism.png",
+        isUnlocked: true,
+        rarity: Rarity.rare,
+        description: "빛의 분광 현상은 빛이 프리즘과 같은 도구를 통과할 때 여러 색깔로 나뉘는 현상입니다."
     ),
   ];
   final List<String> _originalMissions = [
@@ -119,7 +118,7 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                       borderRadius: BorderRadius.circular(16),
                       child: Image.file(
                         width: double.maxFinite,
-                        height: 320,
+                        height: 280,
                         fit: BoxFit.cover,
                         File(widget.imagePath)
                       ),
@@ -174,8 +173,8 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                                 : MainAxisAlignment.start,  // 여러 개면 왼쪽 정렬
                               children: items.map((item) {
                                   return SizedBox(
-                                    width: 150,
-                                    height: 120,
+                                    width: 180,
+                                    height: 165,
                                     child: CollectionCard(item: item),
                                   );
                                 }).toList(),
@@ -261,8 +260,8 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(16),
                       child: Image.asset(
-                        width: 130,
-                        height: 130,
+                        width: 110,
+                        height: 110,
                         fit: BoxFit.fitHeight,
                         'lib/assets/images/onboarding_transparent.png',
                       ),

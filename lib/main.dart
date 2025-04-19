@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
       title: 'STdev Collection App',
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
+      routes: {
         '/': (context) => LoadingScreen(),
         '/main': (context) => MainPage(),
         '/camera': (context) => CameraPage(camera: camera),

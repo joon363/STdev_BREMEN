@@ -33,7 +33,7 @@ Future<List<bool>> fetchCardItemsFromApi({
   );
 
   if (response.statusCode != 200) {
-    throw Exception('API 요청 실패: ${response.statusCode}');
+    throw Exception('API 요청 실패: ${response.statusCode}, ${response.body}');
   }
 
   final data = jsonDecode(response.body);
