@@ -17,6 +17,38 @@ def clean_json_string(json_str):
     
     return json_str
 
+def add_card_message(result, mission_cards):
+    """
+    success가 True인 미션에 대해 해당하는 카드 획득 메시지를 추가합니다.
+    
+    Args:
+        result (dict): API 응답 결과
+        mission_cards (list): 각 미션에 해당하는 카드 이름 리스트
+    
+    Returns:
+        dict: 카드 획득 메시지가 추가된 결과
+    """
+    if 'judgement' not in result:
+        return result
+        
+    for mission_idx, mission_result in result['judgement'].items():
+        if mission_result.get('success', False):
+            # 해당 미션의 카드 이름 가져오기
+            card_name = mission_cards[int(mission_idx)]
+            card_message = f"🎉 축하합니다! '{card_name}'를 획득하셨습니다! 🎊"
+            
+            # description이 리스트인 경우
+            if isinstance(mission_result['description'], list):
+                mission_result['description'].append(card_message)
+            # description이 문자열인 경우
+            else:
+                mission_result['description'] = [
+                    mission_result['description'],
+                    card_message
+                ]
+    
+    return result
+
 def test_api():
     try:
         # 현재 디렉토리 출력
@@ -31,13 +63,18 @@ def test_api():
         with open("test_image.jpeg", "rb") as image_file:
             encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
 
-        # API 요청 데이터 - mission을 배열로 변경
+        # API 요청 데이터
         data = {
             "image": encoded_image,
             "mission": [
                 "중력에 의한 물체의 낙하 현상이 나타나는가?",
                 "관성의 법칙이 나타나는가?",
                 "빛의 분광 현상이 나타나는가?"
+            ],
+            "mission_card": [
+                "중력 카드",
+                "관성 카드",
+                "분광 카드"
             ],
             "query": "이 사진에서 분광이 나타나는 이유는 뭐야?"
         }
@@ -54,13 +91,13 @@ def test_api():
             cleaned_json_str = clean_json_string(result['result'])
             
             try:
-                # 정리된 문자열을 다시 JSON으로 파싱
                 final_result = json.loads(cleaned_json_str)
                 
-                # 결과 출력
+                # 카드 획득 메시지 추가 (mission_card 정보 전달)
+                final_result = add_card_message(final_result, data['mission_card'])
+                
                 print("분석 결과:", json.dumps(final_result, indent=2, ensure_ascii=False))
                 
-                # 정리된 결과를 JSON 파일로 저장
                 with open('analysis_result.json', 'w', encoding='utf-8') as f:
                     json.dump(final_result, f, indent=2, ensure_ascii=False)
                 print("결과가 analysis_result.json 파일에 저장되었습니다.")
@@ -68,7 +105,6 @@ def test_api():
             except json.JSONDecodeError as e:
                 print("JSON 파싱 에러:", e)
                 print("문제의 JSON 문자열:", cleaned_json_str)
-            
         else:
             print("에러 응답:", response.text)
             

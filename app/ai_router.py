@@ -55,7 +55,7 @@ def analyze_image():
                         - 각 미션별로 success와 description을 포함하는 객체를 반환합니다.
                         - success는 boolean 값(true/false)입니다.
                         - description은 문자열 배열입니다. 
-                        - success가 true일 경우 description 안에는 해당 과학 원리에 대한 기본 설명(100자)과, 해당 사진과 관련된 설명(200자), 예시 1(100자), 예시 2(100자), 예시 3(100자)가 각각 나뉘어 5개의 요소로 들어갑니다.
+                        - success가 true일 경우 description 안에는 해당 과학 원리에 대한 기본 설명(100자)과, 해당 사진과 관련된 설명(200자), 예시 1(80자), 예시 2(80자), 예시 3(80자)가 각각 나뉘어 5개의 요소로 들어갑니다.
                         - success가 false일 경우 description 안에는 해당 과학 원리가 나타나지 않는 이유(50자)가 들어갑니다.
 
                         판단 기준(judgement):
@@ -72,7 +72,7 @@ def analyze_image():
                         - judgement와는 별개로 query_result는 사진과 관련된 과학 기술에 대한 질문인 query에 대해서 답변을 작성합니다.
                         - 이 답변은 친근한 대화 형식으로 emoji를 사용하여 알려주세요.
                         - 문단 단위로 element로 추가해주세요.
-                        - 모든 요소들을 종합하여 300자 정도 작성해주세요.
+                        - 모든 요소들을 종합하여 200자 정도 작성해주세요.
                         
 
                         응답은 반드시 위의 json 형식으로만 작성하고, 추가 설명이나 다른 텍스트를 포함하지 마세요."""
@@ -85,7 +85,7 @@ def analyze_image():
                     "content": [
                         {
                             "type": "text",
-                            "text": f"미션: {data['mission']}\n query: {data['query']} \n프롬프트: {prompt_text}"
+                            "text": f"미션: {data['mission']}\n query: {data['query']}\n 프롬프트: {prompt_text}"
                         },
                         {
                             "type": "image_url",
