@@ -53,6 +53,9 @@ def add_card_message(result, mission_cards):
                 ]
     
     return result
+@app.route('/', methods=['GET'])
+def index():
+    return "AI Router Server is running!"
 
 @app.route('/process_image', methods=['POST'])
 def process_image():
@@ -94,4 +97,4 @@ def process_image():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(port=5001)  # AI 서버와 다른 포트 사용
+    app.run(host="0.0.0.0", port=5001, debug=True)  # AI 서버와 다른 포트 사용
