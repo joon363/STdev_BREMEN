@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => MainPage(),
         '/collectionDetail': (context) {
           final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-          return CollectionDetailPage(title: args['title']);
+          return CollectionDetailPage(collectionKey: args['collectionKey']);
         },
         '/cardDetail': (context) {
           final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;

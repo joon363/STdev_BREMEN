@@ -2,29 +2,30 @@ import 'package:flutter/material.dart';
 import '../models/card_item.dart';
 import '../constants/card_styles.dart';
 import 'CardDetail.dart';
+import 'package:stdev_bremen/data/collection_registry.dart';
+import '../data/collection_registry.dart';
+import '../models/collection_meta.dart';
 
 class CollectionDetailPage extends StatelessWidget {
-  final String title;
+  final String collectionKey;
 
-  const CollectionDetailPage({required this.title, super.key});
-
-  final Map<String, List<CardItem>> data = const {
-    "힘과 운동": [
-      CardItem(name: "뉴턴의 제1법칙", imagePath: "assets/images/newton.png", isUnlocked: true, rarity: Rarity.common, description: "정지해 있거나 등속 직선 운동을 하는 물체는 외부 힘이 작용하지 않는 한 계속 그 상태를 유지한다.",),
-      CardItem(name: "중력 실험", imagePath: "assets/images/gravity.jpg", isUnlocked: true, rarity: Rarity.rare, description: "정지해 있거나 등속 직선 운동을 하는 물체는 외부 힘이 작용하지 않는 한 계속 그 상태를 유지한다.",),
-      CardItem(name: "마찰력", imagePath: "assets/images/friction.png", isUnlocked: true, rarity: Rarity.rare, description: "정지해 있거나 등속 직선 운동을 하는 물체는 외부 힘이 작용하지 않는 한 계속 그 상태를 유지한다.",),
-      CardItem(name: "등속 운동", imagePath: "assets/images/uniform.png", isUnlocked: false, rarity: Rarity.legendary, description: "정지해 있거나 등속 직선 운동을 하는 물체는 외부 힘이 작용하지 않는 한 계속 그 상태를 유지한다.",),
-    ],
-    "소리와 진동": [
-      CardItem(name: "공명", imagePath: "assets/images/resonance.png", isUnlocked: true, rarity: Rarity.common, description: "정지해 있거나 등속 직선 운동을 하는 물체는 외부 힘이 작용하지 않는 한 계속 그 상태를 유지한다.",),
-      CardItem(name: "파형 관찰", imagePath: "assets/images/wave.png", isUnlocked: false, rarity: Rarity.common, description: "정지해 있거나 등속 직선 운동을 하는 물체는 외부 힘이 작용하지 않는 한 계속 그 상태를 유지한다.",),
-    ],
-  };
+  const CollectionDetailPage({required this.collectionKey, super.key});
 
   @override
   Widget build(BuildContext context) {
+    final CollectionMeta? collection = collectionRegistry[collectionKey];
+
+    if (collection == null) {
+      return Scaffold(
+        appBar: AppBar(title: const Text("컬렉션 없음")),
+        body: const Center(child: Text("존재하지 않는 컬렉션입니다.")),
+      );
+    }
+
+    final data = collection.data;
+
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(title: Text(collection.title)),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: data.entries.map((entry) {
@@ -66,7 +67,7 @@ class CollectionCard extends StatelessWidget {
       onTap: () {
         showDialog(
           context: context,
-          barrierDismissible: true, // 바깥 눌러도 닫힘
+          barrierDismissible: true,
           builder: (BuildContext context) {
             return CardDetailPage(card: item);
           },

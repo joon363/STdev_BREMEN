@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'CollectionDetail.dart';
 
 class CollectionHomePage extends StatelessWidget {
   const CollectionHomePage({super.key});
 
   final List<Collection> collections = const [
-    Collection("초등 3학년 물리", 1200, 0.45),
-    Collection("중등 화학 기본", 800, 0.7),
-    Collection("과학 탐구생활", 300, 0.1),
+    Collection(id: "초3_물리", title: "초등 3학년 물리", subscribers: 1200, progress: 0.45),
+    Collection(id: "초3_화학", title: "중등 화학 기본", subscribers: 800, progress: 0.7),
+    Collection(id: "탐구", title: "과학 탐구생활", subscribers: 300, progress: 0.1),
   ];
 
   @override
@@ -36,7 +35,7 @@ class CollectionHomePage extends StatelessWidget {
                       Navigator.pushNamed(
                         context,
                         '/collectionDetail',
-                        arguments: {'title': collection.title},
+                        arguments: {'collectionKey': collection.id}, // ✅ FIXED
                       );
                     },
                     child: Card(
@@ -71,9 +70,15 @@ class CollectionHomePage extends StatelessWidget {
 }
 
 class Collection {
+  final String id; // 🔑 collectionKey 역할
   final String title;
   final int subscribers;
   final double progress;
 
-  const Collection(this.title, this.subscribers, this.progress);
+  const Collection({
+    required this.id,
+    required this.title,
+    required this.subscribers,
+    required this.progress,
+  });
 }
