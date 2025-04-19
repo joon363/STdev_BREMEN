@@ -27,20 +27,25 @@ class _CollectionHomePageState extends State<CollectionHomePage> {
 
   Future<void> _goToCreatePage() async {
     final result = await Navigator.pushNamed(context, '/createCollection');
+
     if (result is Map<String, dynamic>) {
       setState(() {
+        // 리스트에 새 컬렉션 추가
         collections.add(Collection(
           id: result['id'],
           title: result['title'],
-          subscribers: result['subscribers'],
-          progress: result['progress'],
-          image: result['image'],
+          subscribers: result['subscribers'] ?? 0,
+          progress: result['progress'] ?? 0.0,
+          image: result['image'] ?? 'lib/assets/icons/microbe.png',
         ));
+
+        // 상세 데이터 저장
         customCollectionData[result['id']] = (result['data'] as Map<String, dynamic>)
             .map((key, value) => MapEntry(key, (value as List).cast<CardItem>()));
       });
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
