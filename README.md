@@ -40,7 +40,7 @@
         "description": ["원리 설명","분석결과 설명", "예시1", "예시2","예시3"]
       }
     },
-    "query_result": "query에 대한 응답 array (query가 없을 경우 빈 array)"
+    "query_result": ["query 답변 1문단", "query 답변 2문단", ...]
   }
 }
 ```
