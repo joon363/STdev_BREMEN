@@ -1,4 +1,6 @@
 # ai_router API
+환경 변수 설정:
+- `.env` 파일 생성 후 OPENAI_API_KEY= 추가
 ## API 명세
 ### 엔드포인트
 - URL: `http://127.0.0.1:5000/analyze`
@@ -44,14 +46,3 @@
   - `description`: 분석 설명 (문자열, 400자 이내)
     - success가 true일 경우: 이미지에서 나타나는 과학 원리와 설명
     - success가 false일 경우: 해당 현상이 나타나지 않는 이유와 과학 원리 설명
-
-## 설치 및 실행
-
-### 설치
-1. 필요한 패키지 설치:
-```bash
-pip install -r requirements.txt
-```
-
-2. 환경 변수 설정:
-- `.env` 파일 생성 후 OPENAI_API_KEY= 추가
