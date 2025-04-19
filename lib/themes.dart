@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-const Color primaryColor = Color (0xFF2CBA64);
-const Color primaryColorLight = Color (0xFFEBFFEF);
+const Color primaryColor = Color (0xFF0E06ED);
+const Color primaryColorLight = Color (0xFFEEE9FF);
 
 class AppTheme {
   static ThemeData lightTheme(BuildContext context) {
     return ThemeData(
-      fontFamily: "Inter",
+      fontFamily: "Kakao",
       colorSchemeSeed: Colors.white,
       canvasColor: Colors.white,
       dialogBackgroundColor: Colors.white,

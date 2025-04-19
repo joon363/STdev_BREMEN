@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:stdev_bremen/pages/camera_page.dart';
+import 'package:stdev_bremen/pages/ranking_page.dart';
+import 'package:stdev_bremen/screens/CollectionHome.dart';
 import 'main_page.dart';
 import 'package:stdev_bremen/themes.dart';
+import 'package:stdev_bremen/pages/onboarding_page.dart';
 import 'screens/CollectionDetail.dart';
 import 'screens/CardDetail.dart';
 
@@ -19,11 +23,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => MainPage(),
-        '/collectionDetail': (context) {
-          final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-          return CollectionDetailPage(collectionKey: args['collectionKey']);
-        },
+        '/': (context) => LoadingScreen(),
+        '/main': (context) => MainPage(),
+        '/camera': (context) => CameraPage(),
+        '/ranking': (context) => RankingPage(),
+        '/collectionHome': (context) => CollectionHomePage(),
         '/cardDetail': (context) {
           final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
           return CardDetailPage(card: args['card']);

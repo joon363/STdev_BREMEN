@@ -32,9 +32,7 @@ class CollectionHomePage extends StatelessWidget {
                   final collection = collections[index];
                   return GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        '/collectionDetail',
+                      Navigator.pushNamed(context,'/collectionDetail',
                         arguments: {'collectionKey': collection.id}, // ✅ FIXED
                       );
                     },
