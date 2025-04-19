@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../models/card_item.dart';
+import '../constants/card_styles.dart';
 
 class CreateCollectionPage extends StatefulWidget {
   const CreateCollectionPage({super.key});
@@ -11,7 +13,7 @@ class _CreateCollectionPageState extends State<CreateCollectionPage> {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
 
-  final List<Widget> contentBlocks = []; // 커리큘럼 제목/카드 위젯 리스트
+  final List<_BlockEntry> contentEntries = [];
 
   void _addBlock() {
     showModalBottomSheet(
@@ -25,8 +27,10 @@ class _CreateCollectionPageState extends State<CreateCollectionPage> {
               title: const Text('커리큘럼 제목 추가'),
               onTap: () {
                 Navigator.pop(context);
+                final controller = TextEditingController();
+                final widget = _buildCurriculumTitle(controller);
                 setState(() {
-                  contentBlocks.add(_buildCurriculumTitle());
+                  contentEntries.add(_BlockEntry.section(widget, controller));
                 });
               },
             ),
@@ -35,8 +39,17 @@ class _CreateCollectionPageState extends State<CreateCollectionPage> {
               title: const Text('카드 추가'),
               onTap: () {
                 Navigator.pop(context);
+                final titleController = TextEditingController();
+                final descController = TextEditingController();
+                final rarity = Rarity.common;
+                final widget = _buildCardEditor(titleController, descController);
+                final input = _CardInput(
+                  titleController: titleController,
+                  descController: descController,
+                  rarity: rarity,
+                );
                 setState(() {
-                  contentBlocks.add(_buildCardEditor());
+                  contentEntries.add(_BlockEntry.card(widget, input));
                 });
               },
             )
@@ -46,16 +59,17 @@ class _CreateCollectionPageState extends State<CreateCollectionPage> {
     );
   }
 
-  Widget _buildCurriculumTitle() {
+  Widget _buildCurriculumTitle(TextEditingController controller) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
-        children: const [
-          Icon(Icons.drag_handle),
-          SizedBox(width: 8),
+        children: [
+          const Icon(Icons.drag_handle),
+          const SizedBox(width: 8),
           Expanded(
             child: TextField(
-              decoration: InputDecoration(
+              controller: controller,
+              decoration: const InputDecoration(
                 labelText: '커리큘럼 제목',
                 border: OutlineInputBorder(),
               ),
@@ -66,7 +80,7 @@ class _CreateCollectionPageState extends State<CreateCollectionPage> {
     );
   }
 
-  Widget _buildCardEditor() {
+  Widget _buildCardEditor(TextEditingController titleCtrl, TextEditingController descCtrl) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
@@ -87,9 +101,10 @@ class _CreateCollectionPageState extends State<CreateCollectionPage> {
                 child: const Text('이미지 업로드'),
               ),
               const SizedBox(width: 16),
-              const Expanded(
+              Expanded(
                 child: TextField(
-                  decoration: InputDecoration(
+                  controller: titleCtrl,
+                  decoration: const InputDecoration(
                     labelText: '카드 제목',
                     border: OutlineInputBorder(),
                   ),
@@ -98,8 +113,9 @@ class _CreateCollectionPageState extends State<CreateCollectionPage> {
             ],
           ),
           const SizedBox(height: 8),
-          const TextField(
-            decoration: InputDecoration(
+          TextField(
+            controller: descCtrl,
+            decoration: const InputDecoration(
               labelText: '카드 설명',
               border: OutlineInputBorder(),
             ),
@@ -136,7 +152,7 @@ class _CreateCollectionPageState extends State<CreateCollectionPage> {
                 maxLines: 3,
               ),
               const SizedBox(height: 24),
-              Column(children: contentBlocks),
+              Column(children: contentEntries.map((e) => e.widget).toList()),
               const SizedBox(height: 24),
               ElevatedButton.icon(
                 onPressed: _addBlock,
@@ -153,11 +169,43 @@ class _CreateCollectionPageState extends State<CreateCollectionPage> {
                     return;
                   }
 
+                  final Map<String, List<Map<String, dynamic>>> resultData = {};
+                  String currentSection = '기본 주제';
+
+                  for (final entry in contentEntries) {
+                    if (entry.isSection) {
+                      final text = entry.sectionController?.text.trim() ?? '';
+                      currentSection = text.isNotEmpty ? text : '기본 주제';
+                    } else if (entry.cardInput != null) {
+                      final input = entry.cardInput!;
+                      resultData.putIfAbsent(currentSection, () => []).add({
+                        'name': input.titleController.text,
+                        'description': input.descController.text,
+                        'imagePath': 'assets/images/placeholder.png',
+                        'isUnlocked': true,
+                        'rarity': input.rarity.name,
+                      });
+                    }
+                  }
+
                   Navigator.pop(context, {
-                    'id': titleController.text, // 임시 ID는 제목으로
+                    'id': titleController.text,
                     'title': titleController.text,
                     'subscribers': 0,
                     'progress': 0.0,
+                    'data': resultData.map((key, list) => MapEntry(
+                      key,
+                      list.map((e) => CardItem(
+                        name: e['name'],
+                        description: e['description'],
+                        imagePath: e['imagePath'],
+                        isUnlocked: e['isUnlocked'],
+                        rarity: Rarity.values.firstWhere(
+                              (r) => r.name == e['rarity'],
+                          orElse: () => Rarity.common,
+                        ),
+                      )).toList(),
+                    )),
                   });
                 },
                 child: const Text("컬렉션 생성 완료"),
@@ -168,4 +216,31 @@ class _CreateCollectionPageState extends State<CreateCollectionPage> {
       ),
     );
   }
+}
+
+class _BlockEntry {
+  final Widget widget;
+  final bool isSection;
+  final TextEditingController? sectionController;
+  final _CardInput? cardInput;
+
+  _BlockEntry.section(this.widget, this.sectionController)
+      : isSection = true,
+        cardInput = null;
+
+  _BlockEntry.card(this.widget, this.cardInput)
+      : isSection = false,
+        sectionController = null;
+}
+
+class _CardInput {
+  final TextEditingController titleController;
+  final TextEditingController descController;
+  final Rarity rarity;
+
+  _CardInput({
+    required this.titleController,
+    required this.descController,
+    required this.rarity,
+  });
 }

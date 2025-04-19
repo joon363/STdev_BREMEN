@@ -7,28 +7,38 @@ import '../data/collection_registry.dart';
 import '../models/collection_meta.dart';
 
 class CollectionDetailPage extends StatelessWidget {
-  final String collectionKey;
+  final String? collectionKey;
+  final String? title;
+  final Map<String, List<CardItem>>? data;
 
-  const CollectionDetailPage({required this.collectionKey, super.key});
+  const CollectionDetailPage({this.collectionKey, this.title, this.data, super.key});
 
   @override
   Widget build(BuildContext context) {
-    final CollectionMeta? collection = collectionRegistry[collectionKey];
+    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
+    final effectiveTitle = title ?? args?['title'];
+    final rawData = data ?? args?['data'];
 
-    if (collection == null) {
+    // 기존 레지스트리에서 가져오는 fallback
+    final CollectionMeta? collection = collectionKey != null ? collectionRegistry[collectionKey!] : null;
+    final resolvedTitle = effectiveTitle ?? collection?.title ?? "컬렉션";
+
+    final resolvedData = (rawData ?? collection?.data)?.map(
+          (key, value) => MapEntry(key, value.map((e) => _toCardItem(e)).toList()),
+    );
+
+    if (resolvedData == null) {
       return Scaffold(
         appBar: AppBar(title: const Text("컬렉션 없음")),
         body: const Center(child: Text("존재하지 않는 컬렉션입니다.")),
       );
     }
 
-    final data = collection.data;
-
     return Scaffold(
-      appBar: AppBar(title: Text(collection.title)),
+      appBar: AppBar(title: Text(resolvedTitle)),
       body: ListView(
         padding: const EdgeInsets.all(16),
-        children: data.entries.map((entry) {
+        children: resolvedData.entries.map<Widget>((entry) {
           final subject = entry.key;
           final items = entry.value;
 
@@ -43,9 +53,7 @@ class CollectionDetailPage extends StatelessWidget {
                 mainAxisSpacing: 12,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                children: items
-                    .map((item) => CollectionCard(item: item))
-                    .toList(),
+                children: items.map<Widget>((item) => CollectionCard(item: item)).toList(),
               ),
               const SizedBox(height: 24),
             ],
@@ -53,6 +61,23 @@ class CollectionDetailPage extends StatelessWidget {
         }).toList(),
       ),
     );
+  }
+
+  static CardItem _toCardItem(dynamic e) {
+    if (e is CardItem) return e;
+    if (e is Map<String, dynamic>) {
+      return CardItem(
+        name: e['name'] ?? '제목 없음',
+        imagePath: e['imagePath'] ?? 'assets/images/placeholder.png',
+        isUnlocked: e['isUnlocked'] ?? true,
+        rarity: Rarity.values.firstWhere(
+              (r) => r.toString() == 'Rarity.${e['rarity']}',
+          orElse: () => Rarity.common,
+        ),
+        description: e['description'] ?? '',
+      );
+    }
+    throw ArgumentError('Invalid card item data');
   }
 }
 

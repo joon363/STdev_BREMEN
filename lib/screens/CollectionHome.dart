@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../models/card_item.dart';
+import 'CollectionDetail.dart';
 
 class CollectionHomePage extends StatefulWidget {
   const CollectionHomePage({super.key});
@@ -14,6 +16,8 @@ class _CollectionHomePageState extends State<CollectionHomePage> {
     const Collection(id: "탐구", title: "과학 탐구생활", subscribers: 300, progress: 0.1),
   ];
 
+  final Map<String, Map<String, List<CardItem>>> customCollectionData = {};
+
   Future<void> _goToCreatePage() async {
     final result = await Navigator.pushNamed(context, '/createCollection');
     if (result is Map<String, dynamic>) {
@@ -24,6 +28,9 @@ class _CollectionHomePageState extends State<CollectionHomePage> {
           subscribers: result['subscribers'],
           progress: result['progress'],
         ));
+        customCollectionData[result['id']] = (result['data'] as Map<String, dynamic>).map(
+              (key, value) => MapEntry(key, (value as List).cast<CardItem>()),
+        );
       });
     }
   }
@@ -65,11 +72,23 @@ class _CollectionHomePageState extends State<CollectionHomePage> {
                   final collection = collections[index];
                   return GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(
-                        context,
-                        '/collectionDetail',
-                        arguments: {'collectionKey': collection.id},
-                      );
+                      if (customCollectionData.containsKey(collection.id)) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CollectionDetailPage(
+                              title: collection.title,
+                              data: customCollectionData[collection.id],
+                            ),
+                          ),
+                        );
+                      } else {
+                        Navigator.pushNamed(
+                          context,
+                          '/collectionDetail',
+                          arguments: {'collectionKey': collection.id},
+                        );
+                      }
                     },
                     child: Card(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
