@@ -37,7 +37,7 @@
       },
       "1": {
         "success": true/false,
-        "description": "분석 결과 설명 (400자 이내)"
+        "description": ["원리 설명","분석결과 설명", "예시1", "예시2","예시3"]
       }
     },
     "query_result": "query에 대한 응답 (query가 없을 경우 빈 문자열)"
